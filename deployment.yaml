@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devsu-nodejs
+  namespace: dev
+  labels:
+    app: devsu-nodejs
+spec:
+  replicas: 3 # Acá especificamos los 3 pods solicitados
+  selector:
+    matchLabels:
+      app: devsu-nodejs
+  template:
+    metadata:
+      labels:
+        app: devsu-nodejs
+    spec:
+      containers:
+      - name: nodejs
+        # El image updater reemplazará dinámicamente este tag cuando detecte cambios
+        image: jgraziano/devsu-nodejs:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
